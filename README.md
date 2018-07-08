@@ -38,6 +38,7 @@ python 설치
 /utility
 /CONTRIBUTTORS.txt
 /README.rst
+/nomadgram/templates  // 테스트동안에는 테스트하기 위해 삭제를 유예할 수 있을 것같다.
 ```
 
 ---
@@ -80,5 +81,25 @@ python 설치
 ## 데이터베이스 구동 테스트
 - pipenv shell
 - manage.py가 있는 폴더로 이동 (가상환경으로 들어가면 가상환경을 만든 폴더로 이동되는 것 같다)
-- python manage.py runserver
+- **python manage.py runserver**
 
+# app 추가하기
+- /nomadgram 안에는 user앱이 존재한다.
+- 추가로 images 앱을 추가한다.
+- nomadgram은 두가지 앱을 사용. 
+
+## app 추가 : nomadgram/users 와 같은 레벨에서 실행
+```
+django-admin startapp images
+```
+- /nomadgram/images 가 생성된다. 하위 파일도 함께 생성
+
+## app 인지시키기
+- /settings/base.py  
+- INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+- DJANGO_APPS : 설치될 때 기본적으로 사용하는 것
+- THIRD_PARTY_APPS : 인터넷등에서 찾아 추가해 사용하는 것
+- LOCAL_APPS : 사용자가 직접 추가하는 것
+- LOCAL_APPS 여기에 우리가 추가한 images를 추가한다.
+    - nomadgram/images/apps.py 의 ImageConfig name='images' 를 **name='nomadgram.images'** 로 수정한다.
+    - /settings/base.py 의 LOCAL_APPS= 에 **'nomadgram.images.apps.ImagesConfig',** 를 추가한다.
