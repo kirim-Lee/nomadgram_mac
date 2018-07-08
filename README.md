@@ -42,3 +42,20 @@ python 설치
 
 ---
 # git 생성
+- /nomadgram$ git init
+- git remote add origin {address}
+- git add .
+- git commit -m "cookiecutter + clean up"
+- git push origin master
+
+# 가상환경 설치 / 필요한도구 설치
+- /nomadgram$ pipenv --three : 가상환경 생성
+- pipenv install -r requirements/local.txt : 필요하다고 정의된 것들을 설치함
+- pipenv shell : 가상환경으로 들어감
+- django-admin : 어드민실행 테스트
+
+## 오류가 있을 경우 
+- pip install -U setyptools (-u means upgrade.. maybe)
+- pip install -U pip
+- pipenv install -r requirements/local.txt
+
