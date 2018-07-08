@@ -55,7 +55,30 @@ python 설치
 - django-admin : 어드민실행 테스트
 
 ## 오류가 있을 경우 
-- pip install -U setyptools (-u means upgrade.. maybe)
+- pip install -U setuptools (-u means upgrade.. maybe)
 - pip install -U pip
 - pipenv install -r requirements/local.txt
+
+---
+
+# settings
+- config/setting/ 폴더에 설정 파일이 존재
+- local.py : 로컬에서 쓰이는 설정파일
+- production.py : 실제 빌드시 사용되는 설정파일
+- base.py : local.py, production.py에서 import 하는 파일
+    - 파일 내 사용되는 데이터 베이스 정의가 있다.
+    - DATABASES ={'default': env.db('DATABASE_URL', default='postgres:///nomadgram'),}
+    - 이 프로젝트에서는 postgres를 사용한다.
+
+# 데이터베이스 생성
+- mac에서 생성시
+    - postgres를 실행해 사용유저에 들어가면 터미널이 열린다.
+    - CREATE DATABASE [데이터베이스이름];
+    - 여기서는 데이터베이스이름에 nomadgram을 입력함.
+- window에서 생성하는 방법은 사뭇다르다.(따로 정리가 필요)
+
+## 데이터베이스 구동 테스트
+- pipenv shell
+- manage.py가 있는 폴더로 이동 (가상환경으로 들어가면 가상환경을 만든 폴더로 이동되는 것 같다)
+- python manage.py runserver
 
