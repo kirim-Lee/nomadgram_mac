@@ -15,10 +15,93 @@ python 설치
 - pipenv install django : 장고설치 
 - pipenv shell : 버블안으로 들어가기
 
-# data base 
+# django data base 
 - setting
 - Urls
 - Apps
+    - models
+    - urls(Applications')
+    - views
+- App프로세스 :
+    ```
+     --> 유저는 브라우저에 요청 
+     --> urls로 이동 
+     --> view 실행시킴 
+     --> model을 향함(django ORM이 위치함) 
+     --> ORM을 통해 DB와 대화 오브젝트 돌려줌
+     --> Views 
+     --> Brower(유저)
+     ```
+
+## models 
+- the shape of the data that you are going to save on the database.
+- (데이터베이스에 구조의 모양을 어떻게 저장할지에 관한 것)
+- python classes
+- describe the shape of the data of application
+- create a table in the Database(ORM)
+```
+from django.db import models
+# 테이블 만들기
+class Cat(models.Model):
+    name = models.CharField(max_length=30)
+    breed = models.CharField(max_length=20)
+
+# 데이터 찾기
+cat = Cat.objects.get(id=1) --> 예상결과값이 하나
+british_cats=Cat.objects.filter(breed="British")  --> 예상결과값이 여럿
+## filter lookups 
+cats = Cat.objects.filter(name__startswith="Mr") --> __lookups 이렇게 사용 다음 예제는 Mr로 시작하는것을 찾음
+
+# 데이터 저장
+# 위에서 찾은 cat
+cat.name="fly" --> 수정
+cat.save() --> 삭제는 cat.delete()
+
+# 데이터 추가
+Cat.objects.create(name="Fluffy",breed="Persian")
+```
+### model operations 
+- create()
+- get()
+- filter()
+- all()
+- save()
+- delete()
+
+#### lookup options
+- startswith : 시작하는
+- contains : 들어있는
+- istartswith : 대소문자 구분없이 시작
+- icontains
+- lt : 작은
+- gt : 큰
+- [...more](https://docs.djangoproject.com/en/1.11/topics/db/models/)
+
+## urls
+- django has one urls
+- tell django to do stuff(A.K.A Execute a View) 
+- (url을 통해 어떤것을 보여달라고 요청할 수 있다.)
+- Is the protocol you use to make the app do something.
+- (프로토콜로서 이를 사용해 앱을 실행시킨다.)
+- HTTP Request
+- The URLS of your project are a combination of all your app URLs
+- nomad.com/login 이런식으로 요청할 수 있다.
+
+## Views
+- Tell Django what to do 
+- (무엇을 할지)
+- triggered by a URL call
+- (URL콜)
+- Is just a python function
+- (파이썬을 통한 함수)
+- def showHomepage() 이런식으로 작성
+
+# what is Django ORM
+- ORM : Objct-relational mappers
+- SQL : Structured Query Language / 데이터베이스와 대화할 때 쓰는 언어
+- django ORM 은 SQL언어를 python언어로 해석할 수 있도록 도와주는 통역의 역할을 한다.
+- Python 으로 작성하면 -> django가 번역 -> DB가 SQL을 이해
+
 
 # cookiecutter 추가하기
 - 장고프로젝트의 다른 프로젝트를 복사해 와서 커스터마이징 할 수 있도록 도와주는 도구이다.
