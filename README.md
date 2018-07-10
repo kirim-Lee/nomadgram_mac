@@ -33,7 +33,7 @@ python 설치
      --> Brower(유저)
      ```
 
-## models 
+## 1. models 
 - the shape of the data that you are going to save on the database.
 - (데이터베이스에 구조의 모양을 어떻게 저장할지에 관한 것)
 - python classes
@@ -77,7 +77,11 @@ Cat.objects.create(name="Fluffy",breed="Persian")
 - gt : 큰
 - [...more](https://docs.djangoproject.com/en/1.11/topics/db/models/)
 
-## urls
+### _**migration**_
+- 모델을 만들거나 수정하면 마이그레이션을 해주어야 데이터베이스에 반영된다.
+- python manage.py migrate
+
+## 2. urls
 - django has one urls
 - tell django to do stuff(A.K.A Execute a View) 
 - (url을 통해 어떤것을 보여달라고 요청할 수 있다.)
@@ -87,7 +91,7 @@ Cat.objects.create(name="Fluffy",breed="Persian")
 - The URLS of your project are a combination of all your app URLs
 - nomad.com/login 이런식으로 요청할 수 있다.
 
-## Views
+## 3. Views
 - Tell Django what to do 
 - (무엇을 할지)
 - triggered by a URL call
@@ -168,7 +172,7 @@ Cat.objects.create(name="Fluffy",breed="Persian")
 
 # app 추가하기
 - /nomadgram 안에는 user앱이 존재한다.
-- 추가로 images 앱을 추가한다.
+- 추가로 _images_ 앱을 추가한다.
 - nomadgram은 두가지 앱을 사용. 
 
 ## app 추가 : nomadgram/users 와 같은 레벨에서 실행
@@ -186,3 +190,29 @@ django-admin startapp images
 - LOCAL_APPS 여기에 우리가 추가한 images를 추가한다.
     - nomadgram/images/apps.py 의 ImageConfig name='images' 를 **name='nomadgram.images'** 로 수정한다.
     - /settings/base.py 의 LOCAL_APPS= 에 **'nomadgram.images.apps.ImagesConfig',** 를 추가한다.
+
+## pipenv 환경에서 migration
+- python manage.py migrate
+
+---
+
+# Model 작업
+
+## 슈펴유저만들기
+- python manage.py create superuser
+- localhost:8000/admin/ 에 슈퍼유저로 접속 할 수 있다.
+
+## Create User Model
+
+### references
+- [Classes on Python](https://jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/)
+- [Django model](https://docs.djangoproject.com/en/1.11/topics/db/models/)
+- [DjangoField](https://docs.djangoproject.com/en/1.11/ref/models/fields/)
+
+## user model 
+```
+from django.contrib.auth.models import AbstractUser
+class User(AbstractUser):
+```
+- 기본적으로 제공되는 유저모델
+- 사용시 마이그레이션과 base.py 등에서 **AUTH_USER_MODEL** 이 생성한 모델을 가리키도록 해야함 
