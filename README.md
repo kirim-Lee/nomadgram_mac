@@ -216,3 +216,25 @@ class User(AbstractUser):
 ```
 - 기본적으로 제공되는 유저모델
 - 사용시 마이그레이션과 base.py 등에서 **AUTH_USER_MODEL** 이 생성한 모델을 가리키도록 해야함 
+
+#### from django.db import models
+
+- models.CharField(max_length=100)
+    - CharField에서 _max_length_ 필수 
+- models.TextField(_null=True_)
+    - null값이 가능하게 허용
+- models.ImageField()
+- medels.BooleanField(default=False)
+- models.CharField(max_length=80,choices=GENDOR_CHOICES)
+    - choices 셀렉트 값을 제공함
+    ```
+    GENDOR_CHOICES = (
+        ('male','Male'),
+        ('female','Female'),
+        ('not-specified','Not specified')
+    )
+    //앞의 값이 모델에 사용되고 뒤의값은 보기 편한 단어
+    ```
+
+- models.**ForeignKey**(Owner,null=True) (ManyToOne)
+- models.**ManyToManyField**('self')
