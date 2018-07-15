@@ -19,6 +19,8 @@ class User(AbstractUser):
     bio = models.TextField(null=True)
     phone = models.CharField(max_length=140, null=True)
     gender = models.CharField(max_length=80, choices=GENDOR_CHOICES, null=True)
+    followers = models.ManyToManyField("self")
+    following = models.ManyToManyField("self")
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
