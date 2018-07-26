@@ -238,3 +238,39 @@ class User(AbstractUser):
 
 - models.**ForeignKey**(Owner,null=True) (ManyToOne)
 - models.**ManyToManyField**('self')
+
+#### __str__
+
+
+## REST API
+- Create = POST
+- Read = GET
+- Update = PUT
+- Delete = DELETE
+
+- REST 동사로 쓰기보다는 명사로 구조를 만드는 것이 좋음
+    - /getDogs --> x
+    - /dogs --> o
+- 직관적이고 명료하게
+
+GET->/dogs/kung
+POST-> /dogs/kung 
+PUT->/dogs/kung
+DELETE-> /dogs/kung
+
+
+- GET -> /dogs/search?color=brown 
+- GET -> /owners/nicolas/dogs/search?color=brown relation 
+- GET -> /v1/dogs/search?color=brown 버전관리
+
+
+## REST_FRAMEWORK
+- pipenv shell
+- 작업폴더에서 pipenv install djangoframework
+- config/setting/base.py --> THIRD_PARTY_APPS = 'rest_framework' 추가 (자동으로 추가됨)
+- api json api-> json(javascript Object Notation) 
+- django는 json을 알지 못함 python과 소통
+- django rest framework가 가지고 있는 시리얼라이저가 python object를 json object로 변환시키는 작업을 한다.
+- 시리얼라이저 = 장고/파이썬 - 자바스크립트를 연결하는 다리 역할
+- 파이썬 -> 시리얼라이저 -> 자바스크립트 오브젝트
+- 제이슨 -> 시리얼라이저 -> 파이썬 오브젝트
