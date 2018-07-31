@@ -274,3 +274,67 @@ DELETE-> /dogs/kung
 - 시리얼라이저 = 장고/파이썬 - 자바스크립트를 연결하는 다리 역할
 - 파이썬 -> 시리얼라이저 -> 자바스크립트 오브젝트
 - 제이슨 -> 시리얼라이저 -> 파이썬 오브젝트
+
+### 시리얼라이저 적용하기
+- serializers.py 
+    - images/ 에 serializers.py 파일생성 (파일명은 꼭 같지 않아도 됨)
+    - import
+    ```
+    from rest_framework import serializers
+    from . import models
+    ```
+    - class 시리얼라이저이름(_serializers.ModelSerializer_)
+    ```
+    class ImageSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = models.Image  # models 파일에 있는 Image 모델을 불러옴
+            fields = "__all__"
+    ```
+- views.py 
+    - images/ 에 views.py 파일생성
+    - import and code
+    ```
+    from rest_framework.views import APIView 
+    from rest_framework.response import Response
+    from . import models, serializers
+
+    class ListAllImages(APIView):
+    
+        def get(self,request,format=None): # format None 이면 default 값인 JSON 으로 응답
+            all_images = models.Image.objects.all() # 모든 이미지를 가져옴
+            
+            serializer = serializers.ImageSerializer(all_images, many=True)
+
+            return Response(data=serializer.data)
+    ```
+    - 모델과 시리얼라이저를 불러와 뷰로 연결
+
+- urls.py 
+    - images/ 에 urls.py 파일생성
+    - import
+    ```
+    from django.conf.urls import url
+    from . import views
+    ```
+    - urlpatterns = [] 에 url설정
+    - app_name을 상단에 입력해주어야 함
+    ```
+    app_name="images"
+    urlpatterns = [
+        url(
+            regex=r"^all/$",
+            view=views.ListAllImages.as_view(),
+            name="all_images"
+        )
+    ]
+    ```
+- settings/urls.py 에 해당 url을 연결해줌
+- urlpattern 에 추가해준다.
+```
+urlpatterns = [
+    ...,
+    path("images/", include("nomadgram.images.urls",namespace="images")), # 추가
+    path("accounts/", include("allauth.urls")),
+]
+```
+    
